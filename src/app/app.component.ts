@@ -50,23 +50,25 @@ export class AppComponent implements OnInit, OnDestroy {
     this.planetAndCharactersResults$ = forkJoin([
       this.mockDataService.getCharacters(),
       this.mockDataService.getPlanets()
-    ]);
+    ]).pipe(
+      map(([characters,planets])=>[...characters,...planets])
+    );
   }
 
   initLoadingState(): void {
     const stream1State = this.mockDataService.getCharactersLoader();
     const stream2State = this.mockDataService.getPlanetLoader();
-    let result:boolean[] = [];
     const combinedStreams = combineLatest({stream1State,stream2State});
-    this.subscriptions.push(combinedStreams.subscribe((value) => {result.push(value.stream1State,value.stream2State)}));
-
-    if(this.areAllValuesTrue(result)){
-      this.isLoading = true;
-    }
+    this.subscriptions.push(combinedStreams.subscribe(
+      (value) => {
+        if(this.areAllValuesTrue([value.stream1State,value.stream2State])){
+          this.isLoading = value.stream1State;
+        }
+      }));
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.map(subscription => subscription.unsubscribe);
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe);
   }
 
   areAllValuesTrue(elements: boolean[]): boolean {
