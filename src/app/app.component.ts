@@ -61,9 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const combinedStreams = combineLatest({stream1State,stream2State});
     this.subscriptions.push(combinedStreams.subscribe(
       (value) => {
-        if(this.areAllValuesTrue([value.stream1State,value.stream2State])){
-          this.isLoading = value.stream1State;
-        }
+        this.isLoading = this.areAllValuesTrue([value.stream1State,value.stream2State]);
       }));
   }
 
