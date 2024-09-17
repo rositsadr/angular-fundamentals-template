@@ -1,4 +1,13 @@
 <div class="app-header">
-  <img alt="logo" src="assets/logo.svg">
-  <!-- Enter your code here -->
+  <img alt="logo" [src]="imageSource">
+  <ng-content></ng-content>
+  <ng-content select="app-button"></ng-content>
+  <!-- <div *ngIf="{userName}.userName.length>0;then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <span>{{userName}}</span>
+    <app-button [buttonText]="'LOGOUT'"></app-button>
+  </ng-template>
+  <ng-template #elseBlock>
+    <app-button [buttonText]="'LOGIN'"></app-button>
+  </ng-template> -->
 </div>

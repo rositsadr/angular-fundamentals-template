@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./course-info.component.scss']
 })
 export class CourseInfoComponent {
+  title: string = "";
+  description: string = "";
+  id: string = "";
+  creationDate: Date = new Date();
+  duration: number = 0;
+  authors: string[] = [];
   // Use the names for the input `course`.
 }
